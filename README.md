@@ -20,8 +20,8 @@
 
 ### Install Virtctl
 ```
-chmod +x resources/virtctl
-sudo mv resources/virtctl /usr/bin
+chmod +x resources/v0.24.0/virtctl
+sudo mv resources/v0.24.0/virtctl /usr/bin
 ```
 
 ### Create KubeVirt Namespace
