@@ -29,7 +29,7 @@ vmi:
 
 pvc:
   name: fedora1
-  image: image: https://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.raw.xz
+  image: https://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.raw.xz
   labels:
     app: containerized-data-importer
   accessModes: ReadWriteOnce

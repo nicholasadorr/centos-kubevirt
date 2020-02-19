@@ -40,7 +40,7 @@ spec:
       volumes:
       - name: {{ .Values.vmi.devices.disks.disk }}
         persistentVolumeClaim:
-          claimName: {{ .Values.pvc,name }}
+          claimName: {{ .Values.pvc.name }}
       - name: {{ .Values.vmi.devices.disks.cdrom }}
         cloudInitNoCloud:
           userDataBase64: {{ .Values.vmi.volumes.cloudinit }} 
