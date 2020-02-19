@@ -43,4 +43,4 @@ spec:
           claimName: {{ .Values.pvc.name }}
       - name: {{ .Values.vmi.devices.disks.cdrom }}
         cloudInitNoCloud:
-          userDataBase64: {{ .Values.vmi.volumes.cloudinit }} 
+          userDataBase64:  
