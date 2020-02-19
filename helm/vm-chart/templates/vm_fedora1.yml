@@ -1,0 +1,41 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  generation: 1
+  labels:
+    kubevirt.io/os: {{ .Values.vmi.labels.os }}
+    kubevirt.io/distro: {{ .Values.vmi.labels.distro }}
+    kubevirt.io/domain: {{ .Values.vmi.labels.domain }}
+  name: {{ .Values.vmi.kubevirt.name }}
+spec:
+  running: {{ .Values.vmi.running }}
+  template:
+    metadata:
+      creationTimestamp: {{ .Values.vmi.timestamp }}
+      labels:
+        kubevirt.io/domain: {{ .Values.vmi.labels.domain }}
+    spec:
+      domain:
+        cpu:
+          cores: {{ .Values.vmi.cpu }}
+        devices:
+          disks:
+          - disk:
+              bus: {{ .Values.vmi.devices.disks.disk.bus }}
+            name: {{ .Values.vmi.devices.disks.disk }}
+          - cdrom:
+              bus: {{ .Values.vmi.devices.disks.cdrom.bus }}
+              readonly: {{ .Values.vmi.devices.disks.cdrom.readonly }}
+            name: {{ .Values.vmi.devices.disks.cdrom }}
+        machine:
+          type: {{ .Values.vmi.machineType }}
+        resources:
+          requests:
+            memory: {{ .Values.vmi.memory }}
+      volumes:
+      - name: {{ .Values.vmi.devices.disks.disk }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.vmi.volumes.persistentVolumeClaim }}
+      - name: {{ .Values.vmi.devices.disks.cdrom }}
+        cloudInitNoCloud:
+          userDataBase64: {{ .Values.vmi.volumes.cloudinit }} 
