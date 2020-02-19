@@ -11,7 +11,7 @@
 <br><br><br>
 
 ## Goals
-> _The goal of this folder is to create the helm charts necessary to launch KubeVirt Virtual Machines, the actual launching of the operator is not in scope for what we are trying to accomplish.
+> The goal of this folder is to create the helm charts necessary to launch KubeVirt Virtual Machines, the actual launching of the operator is not in scope for what we are trying to accomplish.
 
 ## Project Dependencies
 * Minikube 1.5.2+
