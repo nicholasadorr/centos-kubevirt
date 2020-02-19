@@ -51,7 +51,7 @@
 - [ ] **Create one chart to rule them all that successfully deploys the PVC, then after an appropriate amount of time deploys the VM**
 
 ## Usage
-1) Edit and create the necessary pvc ahead of time from within the pre reqs folder'
+1) Edit and create the necessary pvc ahead of time from within the pre reqs folder
 
 ```
 kubectl create -f prereqs/pvc_fedora1.yml
