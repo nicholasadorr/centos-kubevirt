@@ -2,6 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+namespace: default
+
 vmi:
   name: fedora1
   timestamp: null
@@ -14,15 +16,16 @@ vmi:
   cpu: 2
   devices:
     disks:
-      disk: disk0
+      disk:
+        name: disk0
         bus: virtio
-      cdrom: cloudinitdisk
+      cdrom:
+        name: cloudinitdisk
         bus: sata
         readonly: true
   machineType: q35
   volumes:
-    cloudinit: $(cat ../startup-scripts/fedora-startup-script.sh | base64 -w0)
-    persistentVolumeClaim: fedora1 
+    cloudinit: null
 
 pvc:
   name: fedora1

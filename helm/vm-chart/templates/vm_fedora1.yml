@@ -22,11 +22,11 @@ spec:
           disks:
           - disk:
               bus: {{ .Values.vmi.devices.disks.disk.bus }}
-            name: {{ .Values.vmi.devices.disks.disk }}
+            name: {{ .Values.vmi.devices.disks.disk.name }}
           - cdrom:
               bus: {{ .Values.vmi.devices.disks.cdrom.bus }}
               readonly: {{ .Values.vmi.devices.disks.cdrom.readonly }}
-            name: {{ .Values.vmi.devices.disks.cdrom }}
+            name: {{ .Values.vmi.devices.disks.cdrom.name }}
         machine:
           type: {{ .Values.vmi.machineType }}
         resources:
@@ -35,7 +35,7 @@ spec:
       volumes:
       - name: {{ .Values.vmi.devices.disks.disk }}
         persistentVolumeClaim:
-          claimName: {{ .Values.vmi.volumes.persistentVolumeClaim }}
+          claimName: {{ .Values.pvc,name }}
       - name: {{ .Values.vmi.devices.disks.cdrom }}
         cloudInitNoCloud:
           userDataBase64: {{ .Values.vmi.volumes.cloudinit }} 
