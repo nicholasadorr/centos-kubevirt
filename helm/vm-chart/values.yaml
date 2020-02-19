@@ -52,19 +52,27 @@ ingress:
 
 kubevirt:
   namespace: default 
-  name: vm
+  name: fedora1
+  image: image: https://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.raw.xz
+  timestamp: null
   labels:
-    size: small
-    domain: test-vm
-    distro: fedora 
+    domain: fedora1
+    distro: fedoraCloud30
     os: linux
   running: true
   memory: 4096M
   cpu: 2
-  storage:
-    image: mjschmidt/centos:7-x86_64-genericcloud-1907
-    cloud:
-      init: nothing #$(cat ../startup-scripts/fedora-startup-script.sh | base64 -w0) #null 
+  devices:
+    disks:
+      disk: disk0
+        bus: virtio
+      cdrom: cloudinitdisk
+        bus: sata
+        readonly: true
+  machineType: q35
+  volumes:
+    cloudinit: $(cat ../startup-scripts/fedora-startup-script.sh | base64 -w0)
+    persistentVolumeClaim: fedora1 
   
 #desire is to remove this section in the future if possible
 resources: {}

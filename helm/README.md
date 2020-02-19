@@ -54,9 +54,9 @@
 1) Edit and create the necessary pvc ahead of time from within the pre reqs folder'
 
 ```
-kubectl create -f prereqs/pvc_fedora_vm.yml
+kubectl create -f prereqs/pvc_fedora1.yml
 ```
-2) Wait for the CDI pod to load in the Fedorra OS
+2) Wait for the CDI pod to load in the Fedora OS
 
 3) Deploy the helm chart
 
@@ -72,11 +72,11 @@ The following table lists the configurable parameters of the Airflow chart and t
 |------------------------------------------|---------------------------------------------------------|---------------------------|
 | `kubevirt.namespace`                     | Namespace the VM will be deployed to                    | ```default```             |
 | `kubevirt.name`                          | Virtual Machine Name                                    | ```vm```                  |
-| `kubevirt.labels.size`                   | Just a label to give external pulling entifies more info| ```small```               |
-| `kubevirt.labels.domain`                 | Just a label to give external pulling entifies more info| ```test-vm```             |
-| `kubevirt.labels.distro`                 | Just a label to give external pulling entifies more info| ```linux```               |
-| `kubevirt.labels.os`                     | Just a label to give external pulling entifies more info| `linux`                   |
-| `kubevirt.running`                       | Vm deployed in a running state of in a stopped state    | `running`                 |
+| `kubevirt.labels.size`                   | Just a label to give external pulling entities more info| ```small```               |
+| `kubevirt.labels.domain`                 | Just a label to give external pulling entities more info| ```test-vm```             |
+| `kubevirt.labels.distro`                 | Just a label to give external pulling entities more info| ```linux```               |
+| `kubevirt.labels.os`                     | Just a label to give external pulling entities more info| `linux`                   |
+| `kubevirt.running`                       | Vm deployed in a running state versus in a stopped state    | `running`                 |
 | `kubevirt.memory`                        | Denotes how much memory is allocated to vm              | `4096M`                   |
 | `kubevirt.cpu`                           | Denotes how many cpus are allocated to vm               | `2`                       |
 | `kubevirt.storage.cloud.init`            | Add a base64 encoded cloud init script to your vm       | `nothing`                 |
