@@ -5,7 +5,10 @@ metadata:
   labels:
     app: {{ .Values.pvc.labels.app }}
   annotations:
-    cdi.kubevirt.io/storage.import.endpoint: {{ .Values.pvc.image | quote   }}  
+    cdi.kubevirt.io/storage.import.endpoint: {{ .Values.pvc.image | quote }}
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   accessModes:
   - {{ .Values.pvc.accessModes }}
