@@ -1,0 +1,39 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  generation: 1
+  labels:
+    kubevirt.io/os: linux
+  name: fedora1
+spec:
+  running: true
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: fedora1
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: disk0
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: cloudinitdisk
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 4096M
+      volumes:
+      - name: disk0
+        persistentVolumeClaim:
+          claimName: fedora1
+      - name: cloudinitdisk
+        cloudInitNoCloud:
+          userDataBase64: I2Nsb3VkLWNvbmZpZwoKcGFja2FnZV91cGdyYWRlOiB0cnVlCgpwYWNrYWdlczoKICAtIGdpdAoKdXNlcnM6CiAgLSBuYW1lOiBmZWRvcmEKICAgIGdlY29zOiBmZWRvcmEKICAgIHBhc3N3b3JkOiBwYXNzd29yZAogICAgbG9jay1wYXNzd2Q6IGZhbHNlCiAgICBzdWRvOiBbIkFMTD0oQUxMKSBOT1BBU1NXRDpBTEwiXQogICAgc2hlbGw6IC9iaW4vYmFzaAogICAgc3NoX2F1dGhvcml6ZWRfa2V5czoKICAgICAgLSBzc2gtcnNhIEFBQUFCM056YUMxeWMyRUFBQUFCSlFBQUFRRUEySG9TQTk4UXM1YmVDUW5sZk51VFhYTnJ5TE11d1FXR0ZhcWp3blVYZDFGczhqeDdhYzNXYUYzVlhCa3gvbWN5aWtwU21GTG9YMUt0dkpNSHJ2TEtGOEtIcHpJT1g1OXI1L01XRmQ4RWxsRDFIa2ppdjRkRVZmZTRNM1NERFZlSFVVQ091UXVva2NKdXNvUWZ0V05OMGJuc3l2MFRUellHN1hoNUlnM2lralIyN1hCdUFmUzBvNFNJQ2pUSmc3L29YSzlIblBLeC9TWHpyS1NzMHRHbjA4T1I4TndIZHprYnAzR2dVNlljcVNRRHlNUENzVFFRcHk1TGNkbVdkRktzUHRnS0xRMTlxcEJVMFFwN2lPNEJxY3JuN0tsQWJ0cGlXMEZiNVdDV2l2VE1GTktJdnZCelJNckJibDZsZkFoay96ejZQV0Z4N0VkM1JHS21peUNId1E9PSByc2Eta2V5LTIwMTkxMTE1IAogIC0gbmFtZTogbmFkb3JyCiAgICBnZWNvczogbmFkb3JyCiAgICBsb2NrLXBhc3N3ZDogZmFsc2UKICAgIHN1ZG86IFsiQUxMPShBTEwpIE5PUEFTU1dEOkFMTCJdCiAgICBzaGVsbDogL2Jpbi9iYXNoCiAgICBzc2hfYXV0aG9yaXplZF9rZXlzOgogICAgICAtIHNzaC1yc2EgQUFBQUIzTnphQzF5YzJFQUFBQUJKUUFBQVFFQTJIb1NBOThRczViZUNRbmxmTnVUWFhOcnlMTXV3UVdHRmFxanduVVhkMUZzOGp4N2FjM1dhRjNWWEJreC9tY3lpa3BTbUZMb1gxS3R2Sk1IcnZMS0Y4S0hweklPWDU5cjUvTVdGZDhFbGxEMUhraml2NGRFVmZlNE0zU0REVmVIVVVDT3VRdW9rY0p1c29RZnRXTk4wYm5zeXYwVFR6WUc3WGg1SWczaWtqUjI3WEJ1QWZTMG80U0lDalRKZzcvb1hLOUhuUEt4L1NYenJLU3MwdEduMDhPUjhOd0hkemticDNHZ1U2WWNxU1FEeU1QQ3NUUVFweTVMY2RtV2RGS3NQdGdLTFExOXFwQlUwUXA3aU80QnFjcm43S2xBYnRwaVcwRmI1V0NXaXZUTUZOS0l2dkJ6Uk1yQmJsNmxmQWhrL3p6NlBXRng3RWQzUkdLbWl5Q0h3UT09IHJzYS1rZXktMjAxOTExMTUKICAtIG5hbWU6IG1qc2NobWlkdAogICAgZ2Vjb3M6IG1qc2NobWlkdAogICAgbG9jay1wYXNzd2Q6IGZhbHNlCiAgICBzdWRvOiBbIkFMTD0oQUxMKSBOT1BBU1NXRDpBTEwiXQogICAgc3NoX2F1dGhvcml6ZWRfa2V5czoKICAgICAgLSBzc2gtcnNhIEFBQUFCM056YUMxeWMyRUFBQUFCSlFBQUFRRUEySG9TQTk4UXM1YmVDUW5sZk51VFhYTnJ5TE11d1FXR0ZhcWp3blVYZDFGczhqeDdhYzNXYUYzVlhCa3gvbWN5aWtwU21GTG9YMUt0dkpNSHJ2TEtGOEtIcHpJT1g1OXI1L01XRmQ4RWxsRDFIa2ppdjRkRVZmZTRNM1NERFZlSFVVQ091UXVva2NKdXNvUWZ0V05OMGJuc3l2MFRUellHN1hoNUlnM2lralIyN1hCdUFmUzBvNFNJQ2pUSmc3L29YSzlIblBLeC9TWHpyS1NzMHRHbjA4T1I4TndIZHprYnAzR2dVNlljcVNRRHlNUENzVFFRcHk1TGNkbVdkRktzUHRnS0xRMTlxcEJVMFFwN2lPNEJxY3JuN0tsQWJ0cGlXMEZiNVdDV2l2VE1GTktJdnZCelJNckJibDZsZkFoay96ejZQV0Z4N0VkM1JHS21peUNId1E9PSByc2Eta2V5LTIwMTkxMTE1Cg== 
