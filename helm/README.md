@@ -66,24 +66,36 @@ helm install your-helm-deployment-name ./vm-chart/
 
 ## Helm chart Configuration
 
-The following table lists the configurable parameters of the Airflow chart and their default values.
+The following table lists the configurable parameters of the Kubevirt chart and their default values.
 
-| Parameter                                | Description                                             | Default                   |
-|------------------------------------------|---------------------------------------------------------|---------------------------|
-| `kubevirt.namespace`                     | Namespace the VM will be deployed to                    | ```default```             |
-| `kubevirt.name`                          | Virtual Machine Name                                    | ```vm```                  |
-| `kubevirt.labels.size`                   | Just a label to give external pulling entities more info| ```small```               |
-| `kubevirt.labels.domain`                 | Just a label to give external pulling entities more info| ```test-vm```             |
-| `kubevirt.labels.distro`                 | Just a label to give external pulling entities more info| ```linux```               |
-| `kubevirt.labels.os`                     | Just a label to give external pulling entities more info| `linux`                   |
-| `kubevirt.running`                       | Vm deployed in a running state versus in a stopped state    | `running`                 |
-| `kubevirt.memory`                        | Denotes how much memory is allocated to vm              | `4096M`                   |
-| `kubevirt.cpu`                           | Denotes how many cpus are allocated to vm               | `2`                       |
-| `kubevirt.storage.cloud.init`            | Add a base64 encoded cloud init script to your vm       | `nothing`                 |
+| Parameter                                | Description                                               | Default                         |
+|------------------------------------------|-----------------------------------------------------------|---------------------------------|
+| `namespace`                              | Namespace the VM will be deployed to                      | ```default```                   |
+| `vmi.name`                               | Virtual Machine Name                                      | ```fedora1```                   |
+| `vmi.timestamp`                          | If VM creation timestamp is needed                        | `null`                          |
+| `vmi.labels.os`                          | Labeling for external pulling entities                    | `linux`                         |
+| `vmi.labels.distro`                      | Labeling for external pulling entities                    | ```fedoraCloud30```             |
+| `vmi.labels.domain`                      | Labeling for external pulling entities                    | ```domain```                    |
+| `vmi.running`                            | State of VM at launch (if running then true, else false)  | `true`                          |
+| `vmi.memory`                             | Denotes how much memory is allocated to vm                | `4096M`                         |
+| `vmi.cpu`                                | Denotes how many cpus are allocated to vm                 | `2`                             |
+| `vmi.devices.disks.disk.name`            | VM device disk name                                       | `disk0`                         |
+| `vmi.devices.disks.disk.bus`             | VM device disk bus name                                   | `virtio`                        |
+| `vmi.devices.disks.cdrom.name`           | VM device cdrom name                                      | `cloudinitdisk`                 |
+| `vmi.devices.disks.cdrom.bus`            | VM device cdrom bus                                       | `sata`                          |
+| `vmi.devices.disks.cdrom.readonly`       | VM device cdrom status                                    | `readonly`                      |
+| `vmi.machineType`                        | VM machine type                                           | `q35`                           |
+| `vmi.volumes.cloudinit`                  | Add a base64 encoded cloud init script to your vm         | `null`                          |
+| `pvc.name`                               | Name of PVC to build VM with                              | `fedora1`                       |
+| `pvc.image`                              | Image source for PVC                                      | `null`                          |
+| `pvc.labels.app`                         | Labeling for external pulling entities                    | `containerized-data-importer`   |
+| `pvc.accessModes`                        | PVC Access Mode Status                                    | `ReadWriteOnce`                 |
+| `pvc.storageSize`                        | PVC Volume Size                                           | `10Gi`                          |
+
 
 ## Clean up
 When you are finished with the vm & pvc
 ```
 helm del your-helm-deployment-name
-kubectl delete -f prereqs/pvc_fedora_vm.yml
+kubectl delete -f prereqs/pvc_fedora1.yml
 ```
