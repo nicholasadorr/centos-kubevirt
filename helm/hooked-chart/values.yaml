@@ -1,0 +1,36 @@
+# Default values for kubevirt-helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: default
+
+vmi:
+  name: fedora1
+  timestamp: null
+  labels:
+    domain: fedora1
+    distro: fedoraCloud30
+    os: linux
+  running: true
+  memory: 4096M
+  cpu: 2
+  devices:
+    disks:
+      disk:
+        name: disk0
+        bus: virtio
+      cdrom:
+        name: cloudinitdisk
+        bus: sata
+        readonly: true
+  machineType: q35
+  volumes:
+    cloudinit: null
+
+pvc:
+  name: fedora1
+  image: https://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.raw.xz
+  labels:
+    app: containerized-data-importer
+  accessModes: ReadWriteOnce
+  storageSize: 10Gi

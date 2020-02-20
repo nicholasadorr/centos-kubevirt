@@ -51,18 +51,26 @@
 - [ ] **Create one chart to rule them all that successfully deploys the PVC, then after an appropriate amount of time deploys the VM**
 
 ## Usage
-1) Edit and create the necessary pvc ahead of time from within the pre reqs folder
 
+1. Deploy the PVC helm chart
 ```
-kubectl create -f prereqs/pvc_fedora1.yml
+helm install your-pvc-helm-deployment-name ./pvc-chart/
 ```
-2) Wait for the CDI pod to load in the Fedora OS
+ 
+2. Wait for PVC chart to complete after importer has completed
+```
+watch -d kubectl get all
+```
+and/or
+```
+kubectl logs -f $(kubectl get all | grep importer | cut -c -28)
+```
 
-3) Deploy the helm chart
+3. Deploy the VM helm chart
+```
+helm install your-vm-helm-deployment-name ./vm-chart/
+```
 
-```
-helm install your-helm-deployment-name ./vm-chart/
-```
 
 ## Helm chart Configuration
 
