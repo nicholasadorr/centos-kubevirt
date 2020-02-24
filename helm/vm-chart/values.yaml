@@ -24,6 +24,7 @@ vmi:
         bus: sata
         readonly: true
   machineType: q35
+  terminationGracePeriodSeconds: 0
   volumes:
     cloudinit: null
 
@@ -33,4 +34,5 @@ pvc:
   labels:
     app: containerized-data-importer
   accessModes: ReadWriteOnce
+  storageClassName: standard
   storageSize: 10Gi
