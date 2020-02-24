@@ -162,15 +162,15 @@ spec:
 
 ### __Option 2:__
 
-> __Details:__ <br> Option 2 builds PVCs sequentially prior to creating the VM in one yaml
+> __Details:__ <br> Option 2 builds a data volume sequentially prior to creating the VM in one yaml
 
-### Create PVC and VM while adding cloudinit script value
+### Create DV and VM while adding cloudinit script value
 
 ```
-vim pvc_vm_fedora.yml
+vim dv_vm_fedora.yml
 ```
 
-PVC_VM Detals:
+DV_VM Detals:
 ```
 apiVersion: kubevirt.io/v1alpha3
 kind: VirtualMachine
@@ -237,7 +237,7 @@ kubectl create -f vm_fedora1.yml # Option 1
 ```
 _or_
 ``` 
-kubectl create -f pvc_vm_fedora.yml # Option 2
+kubectl create -f dv_vm_fedora.yml # Option 2
 ```
 then:
 ```
