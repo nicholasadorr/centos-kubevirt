@@ -58,7 +58,6 @@ kubectl create -f resources/v0.24.0/cdi-v1.11.0-cr.yaml
 ```
 <img src="images/CDI_status_image.JPG" width="600" height="300" align="center" />
 
-
 ## Steps to build PVCs and create VMs
 
 ## Option 1:
@@ -67,7 +66,6 @@ kubectl create -f resources/v0.24.0/cdi-v1.11.0-cr.yaml
 
 ### Build image into PVC to test VM creation
 ```
-mkdir fedora && cd $_
 vim pvc_fedora1.yml
 ```
 
