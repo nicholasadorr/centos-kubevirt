@@ -28,7 +28,7 @@ vmi:
     cloudinit: null
 
 pvc:
-  name: fedora1
+  name: fedora30pvc
   image: https://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.raw.xz
   labels:
     app: containerized-data-importer

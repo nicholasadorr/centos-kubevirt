@@ -1,6 +1,6 @@
 apiVersion: v2
-name: hooked-chart
-description: A Helm chart for Kubernetes
+name: pvc-vm-chart
+description: A Helm chart for creating an image PVC and VM with persistent storage
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -18,4 +18,4 @@ version: 0.0.1
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: 1
+appVersion: 0.0.1
