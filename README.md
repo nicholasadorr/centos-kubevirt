@@ -7,16 +7,19 @@
 
 <br><br><br>
 
-# KubeVirt
+
+# __KubeVirt and CDI__
 
 > _KubeVirt technology addresses the needs of development teams that have adopted or want to adopt Kubernetes but possess existing Virtual Machine-based workloads that cannot be easily containerized. More specifically, the technology provides a unified development platform where developers can build, modify, and deploy applications residing in both Application Containers as well as Virtual Machines in a common, shared environment._ 
+
+> _Containerized-Data-Importer (CDI) is a persistent storage management add-on for Kubernetes. It's primary goal is to provide a declarative way to build Virtual Machine Disks on PVCs for Kubevirt VMs._
 
 ## Project Dependencies
 * Minikube 1.5.2+
 * Kubectl 1.16.2+
 * Docker 19.03.5+
 
-## Steps for adding KubeVirt environment
+## Steps for adding KubeVirt and Containerized Data Inporter(CDI) environment
 
 ### Install Virtctl
 ```
@@ -47,9 +50,6 @@ watch -d kubectl get all -n kubevirt
 ```
 <img src="images/KV_status_image.JPG" width="600" height="300" align="center" />
 
-
-## Steps for adding CDI environment
-
 ### Create and deploy CDI operator to cluster
 ```
 kubectl create -f resources/v0.24.0/cdi-v1.11.0-operator.yaml
@@ -58,7 +58,14 @@ kubectl create -f resources/v0.24.0/cdi-v1.11.0-cr.yaml
 ```
 <img src="images/CDI_status_image.JPG" width="600" height="300" align="center" />
 
-## Build image into PVC to test VM creation
+
+## Steps to build PVCs and create VMs
+
+## Option 1:
+
+> __Details:__ <br> Option 1 builds PVCs separately from creating the VM  
+
+### Build image into PVC to test VM creation
 ```
 mkdir fedora && cd $_
 vim pvc_fedora1.yml
@@ -155,9 +162,87 @@ spec:
 
 > __Note:__ <br>If command in __userDataBase64__ field doesn't produce value, run command outside of yaml and copy/paste into it 
 
+## Option 2:
+
+> __Details:__ <br> Option 2 builds PVCs sequentially prior to creating the VM in one yaml
+
+### Create PVC and VM while adding cloudinit script value
+
+```
+vim pvc_vm_fedora.yml
+```
+
+PVC_VM Detals:
+```
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  creationTimestamp: null
+  labels:
+    kubevirt.io/vm: fedora1
+  name: fedora1
+spec:
+  dataVolumeTemplates:
+  - metadata:
+      creationTimestamp: null
+      name: fedora-dv
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: standard
+      source:
+        http:
+          url: https://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.raw.xz
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-datavolume
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: data-disk0
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: cloudinitdisk
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 4096M
+      terminationGracePeriodSeconds: 0
+      volumes:
+      - name: data-disk0
+        dataVolume:
+          name: fedora-dv
+      - name: cloudinitdisk
+        cloudInitNoCloud:
+          userDataBase64: $(cat ../startup-scripts/fedora-startup-script.sh | base64 -w0)
+```
+
+> __Note:__ <br>If command in __userDataBase64__ field doesn't produce value, run command outside of yaml and copy/paste into it
+
+
 ### Apply to cluster and watch for creation
 ```
-kubectl create -f vm_fedora1.yml
+kubectl create -f vm_fedora1.yml # Option 1 
+```
+_or_**
+``` 
+kubectl create -f pvc_vm_fedora.yml # Option 2
+```
+then:
+```
 watch -d kubectl get all
 virtctl console fedora1
 ```
@@ -177,5 +262,5 @@ ssh fedora@<host machine ip> -p <service nodeport>
 
 ## Acknowledgments :thumbsup:
 
-* [KubeVirt.io](https://kubevirt.io/). Great tutorials and code usage instructions
-
+* [KubeVirt](https://kubevirt.io/)
+* [CDI][https://github.com/kubevirt/containerized-data-importer] 
