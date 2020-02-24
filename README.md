@@ -56,11 +56,11 @@ kubectl create -f resources/v0.24.0/cdi-v1.11.0-operator.yaml
 
 kubectl create -f resources/v0.24.0/cdi-v1.11.0-cr.yaml
 ```
-<img src="images/CDI_status_image.JPG" width="600" height="300" align="center" />
+<img src="images/CDI_status_image.JPG" width="600" height="300" align="center" /><br>
 
 ## Steps to build PVCs and create VMs
 
-## Option 1:
+### __Option 1:__
 
 > __Details:__ <br> Option 1 builds PVCs separately from creating the VM  
 
@@ -160,7 +160,7 @@ spec:
 
 > __Note:__ <br>If command in __userDataBase64__ field doesn't produce value, run command outside of yaml and copy/paste into it 
 
-## Option 2:
+### __Option 2:__
 
 > __Details:__ <br> Option 2 builds PVCs sequentially prior to creating the VM in one yaml
 
@@ -235,7 +235,7 @@ spec:
 ```
 kubectl create -f vm_fedora1.yml # Option 1 
 ```
-_or_**
+_or_
 ``` 
 kubectl create -f pvc_vm_fedora.yml # Option 2
 ```
