@@ -48,9 +48,14 @@
     - [ ] Ubuntu
     - [ ] RHEL
   - [ ] Enable choice between container image disk or pvc with helm if statement
-- [ ] **Create one chart to rule them all that successfully deploys the PVC, then after an appropriate amount of time deploys the VM**
+- [x] **Create one chart to rule them all that successfully deploys the PVC, then after an appropriate amount of time deploys the VM**
 
 ## Usage
+
+### __Option 1:__
+
+> __Details:__ <br> Option 1 builds PVC separately from creating the VM with two different Helm charts
+
 
 1. Deploy the PVC helm chart
 ```
@@ -69,6 +74,26 @@ kubectl logs -f $(kubectl get all | grep importer | cut -c -28)
 3. Deploy the VM helm chart
 ```
 helm install your-vm-helm-deployment-name ./vm-chart/
+```
+
+4. Watch for completion when VM launches and access the VM
+```
+virtctl console fedora1
+```
+
+
+### __Option 2:__
+
+> __Details:__ <br> Option 2 builds a data volume sequentially prior to creating the VM in one yaml
+
+1. Deploy the data volume with VM helm chart
+```
+helm install your-vm-helm-deployment-name ./dv-vm-chart/
+```
+
+2. Watch for completion when VM launches and access the VM
+```
+virtctl console fedora1
 ```
 
 
@@ -93,12 +118,14 @@ The following table lists the configurable parameters of the Kubevirt chart and 
 | `vmi.devices.disks.cdrom.bus`            | VM device cdrom bus                                       | `sata`                          |
 | `vmi.devices.disks.cdrom.readonly`       | VM device cdrom status                                    | `readonly`                      |
 | `vmi.machineType`                        | VM machine type                                           | `q35`                           |
+| `vmi.terminationGracePeriodSeconds`      | VM grace period timer                                     | `0`                             |
 | `vmi.volumes.cloudinit`                  | Add a base64 encoded cloud init script to your vm         | `null`                          |
-| `pvc.name`                               | Name of PVC to build VM with                              | `fedora1`                       |
-| `pvc.image`                              | Image source for PVC                                      | `null`                          |
+| `pvc.name`                               | Name of storage to build VM with                          | `fedora1`                       |
+| `pvc.image`                              | Image source for VM                                       | `null`                          |
 | `pvc.labels.app`                         | Labeling for external pulling entities                    | `containerized-data-importer`   |
-| `pvc.accessModes`                        | PVC Access Mode Status                                    | `ReadWriteOnce`                 |
-| `pvc.storageSize`                        | PVC Volume Size                                           | `10Gi`                          |
+| `pvc.accessModes`                        | Access mode status                                        | `ReadWriteOnce`                 |
+| `pvc.storageClassName`                   | Storage class name                                        | `standard`                      |
+| `pvc.storageSize`                        | Storage volume Size                                       | `10Gi`                          |
 
 
 ## Clean up

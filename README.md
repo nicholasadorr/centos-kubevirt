@@ -62,7 +62,7 @@ kubectl create -f resources/v0.26.0/cdi-v1.13.0-cr.yaml
 
 ### __Option 1:__
 
-> __Details:__ <br> Option 1 builds PVCs separately from creating the VM  
+> __Details:__ <br> Option 1 builds PVC separately from creating the VM  
 
 ### Build image into PVC to test VM creation
 ```
