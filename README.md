@@ -66,7 +66,7 @@ kubectl create -f resources/v0.26.0/cdi-v1.13.0-cr.yaml
 
 ### Build image into PVC to test VM creation
 ```
-vim pvc_fedora1.yml
+vim pvc-fedora1.yml
 ```
 
 ### PVC details
@@ -89,7 +89,7 @@ spec:
 
 ### Create the PVC with Fedora image
 ```
-kubectl create -f pvc_fedora1.yml
+kubectl create -f pvc-fedora1.yml
 #optional: watch the image download
 kubectl logs -f $(kubectl get all | grep importer | cut -c -28)
 ```
@@ -112,7 +112,7 @@ kubectl get pvc
 > Add public key to startup-scripts/fedora-startup-script.sh in project.
 
 ```
-vim vm_fedora1.yml
+vim vm-fedora1.yml
 ```
 
 ### VM details
@@ -167,7 +167,7 @@ spec:
 ### Create DV and VM while adding cloudinit script value
 
 ```
-vim dv_vm_fedora.yml
+vim dv-vm-fedora.yml
 ```
 
 DV_VM Detals:
@@ -233,11 +233,11 @@ spec:
 
 ### Apply to cluster and watch for creation
 ```
-kubectl create -f vm_fedora1.yml # Option 1 
+kubectl create -f vm-fedora1.yml # Option 1 
 ```
 _or_
 ``` 
-kubectl create -f dv_vm_fedora.yml # Option 2
+kubectl create -f dv-vm-fedora.yml # Option 2
 ```
 then:
 ```
